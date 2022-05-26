@@ -10,13 +10,23 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+type NewNormalFormStruct struct {
+	model.NormalForm
+	CaptchaCode string `json:"captcha_code"`
+	CaptchaId   string `json:"captcha_id"`
+}
+
 func NewNormalForm(c *gin.Context) {
-	postData := model.NormalForm{}
+	// postData := model.NormalForm{}
+	postData := NewNormalFormStruct{}
 	err := c.ShouldBindJSON(&postData)
-	fmt.Println(postData)
 	if err != nil {
 		fmt.Println(err)
 		utility.ResponseError(c, "Post Data Error")
+	}
+	if ok := utility.VerifyCaptcha(postData.CaptchaId, postData.CaptchaCode); !ok {
+		utility.ResponseError(c, "验证码错误")
+		return
 	}
 	normalForm := model.NormalForm{
 		Name:     postData.Name,
