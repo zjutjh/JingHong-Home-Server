@@ -13,4 +13,5 @@ func SetRouter() {
 	Router.GET("/api/get_forms/normal", middleware.IsAdmin, controller.GetAllNormalForms)
 	// Router.GET("/api/get_forms/total", middleware.IsAdmin, controller.GetTotalForm)
 	Router.GET("/api/get_forms/total", controller.GetFormsTotal)
+	Router.GET("/api/get_captcha", controller.NewCaptcha)
 }
