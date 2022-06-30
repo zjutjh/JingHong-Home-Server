@@ -19,22 +19,7 @@ func NewCaptcha(c *gin.Context) {
 	})
 }
 
-// type VerifyCaptchaForm struct {
-// 	id   string
-// 	code string
-// }
-
-// func VerifyCaptcha(c *gin.Context) {
-// 	var data VerifyCaptchaForm
-// 	if err := c.ShouldBindJSON(&data); err != nil {
-// 		utility.ResponseError(c, err.Error())
-// 		return
-// 	}
-// 	if ok := utility.VerifyCaptcha(data.id, data.code); ok {
-// 		utility.ResponseSuccess(c, gin.H{
-// 			"status": "ok",
-// 		})
-// 	} else {
-// 		utility.ResponseError(c, "验证码错误")
-// 	}
-// }
+type VerifyCaptchaForm struct {
+	id   string
+	code string
+}

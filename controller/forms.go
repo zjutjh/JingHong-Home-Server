@@ -8,41 +8,31 @@ import (
 	"zjutjh/Join-Us/utility/initial"
 
 	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
 )
 
-type NewNormalFormStruct struct {
-	model.NormalForm
-	CaptchaCode string `json:"captcha_code"`
-	CaptchaId   string `json:"captcha_id"`
-}
-
 func NewNormalForm(c *gin.Context) {
-	// postData := model.NormalForm{}
-	postData := NewNormalFormStruct{}
-	err := c.ShouldBindJSON(&postData)
+	postData := model.NormalForm{}
+	err := c.ShouldBindBodyWith(&postData, binding.JSON)
 	if err != nil {
 		fmt.Println(err)
 		utility.ResponseError(c, "Post Data Error")
 	}
-	if ok := utility.VerifyCaptcha(postData.CaptchaId, postData.CaptchaCode); !ok {
-		utility.ResponseError(c, "验证码错误")
-		return
-	}
-	normalForm := model.NormalForm{
-		Name:     postData.Name,
-		StuID:    postData.StuID,
-		Gender:   postData.Gender,
-		College:  postData.College,
-		Campus:   postData.Campus,
-		Phone:    postData.Phone,
-		QQ:       postData.QQ,
-		Region:   postData.Region,
-		Want1:    postData.Want1,
-		Want2:    postData.Want2,
-		Profile:  postData.Profile,
-		Feedback: postData.Feedback,
-	}
-	res := initial.DB.Save(&normalForm)
+	// normalForm := model.NormalForm{
+	// 	Name:     postData.Name,
+	// 	StuID:    postData.StuID,
+	// 	Gender:   postData.Gender,
+	// 	College:  postData.College,
+	// 	Campus:   postData.Campus,
+	// 	Phone:    postData.Phone,
+	// 	QQ:       postData.QQ,
+	// 	Region:   postData.Region,
+	// 	Want1:    postData.Want1,
+	// 	Want2:    postData.Want2,
+	// 	Profile:  postData.Profile,
+	// 	Feedback: postData.Feedback,
+	// }
+	res := initial.DB.Save(&postData)
 	if res.RowsAffected == 0 {
 		utility.ResponseError(c, "Database Error")
 	} else {
