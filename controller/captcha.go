@@ -18,8 +18,3 @@ func NewCaptcha(c *gin.Context) {
 		"b64s": b64s,
 	})
 }
-
-type VerifyCaptchaForm struct {
-	id   string
-	code string
-}

@@ -18,20 +18,6 @@ func NewNormalForm(c *gin.Context) {
 		fmt.Println(err)
 		utility.ResponseError(c, "Post Data Error")
 	}
-	// normalForm := model.NormalForm{
-	// 	Name:     postData.Name,
-	// 	StuID:    postData.StuID,
-	// 	Gender:   postData.Gender,
-	// 	College:  postData.College,
-	// 	Campus:   postData.Campus,
-	// 	Phone:    postData.Phone,
-	// 	QQ:       postData.QQ,
-	// 	Region:   postData.Region,
-	// 	Want1:    postData.Want1,
-	// 	Want2:    postData.Want2,
-	// 	Profile:  postData.Profile,
-	// 	Feedback: postData.Feedback,
-	// }
 	res := initial.DB.Save(&postData)
 	if res.RowsAffected == 0 {
 		utility.ResponseError(c, "Database Error")
@@ -40,25 +26,11 @@ func NewNormalForm(c *gin.Context) {
 	}
 }
 
-type ability struct {
-	Api      bool `json:"api"`
-	FrontEnd bool `json:"front_end"`
-	Document bool `json:"document"`
-	Git      bool `json:"git"`
-}
-type DeveloperFormApi struct {
-	model.DeveloperForm
-	Ability ability `json:"ability"`
-}
-
 func NewDevelopForm(c *gin.Context) {
-	// data := DeveloperFormApi{}
 	data := model.DeveloperForm{}
 	err := c.ShouldBindJSON(&data)
-	// fmt.Println(data)
 	if err != nil {
 		utility.ResponseError(c, "Json error")
-		// fmt.Println(err)
 	}
 	raw_data := model.DeveloperForm{}
 	raw_data.StuID = data.StuID
@@ -86,11 +58,8 @@ func GetAllNormalForms(c *gin.Context) {
 }
 
 func GetAllDevelopForms(c *gin.Context) {
-	// res := []DeveloperFormApi{}
 	dev := []model.DeveloperForm{}
-	// abi := []model.Ability{}
 	initial.DB.Preload("Ability").Find(&dev)
-	// initial.DB.Find(&abi)
 	utility.ResponseSuccess(c, gin.H{
 		"forms": dev,
 	})
@@ -126,10 +95,6 @@ type FormsDataTotal struct {
 }
 
 func GetFormsTotal(c *gin.Context) {
-
-	// nm 我这辈子没写过这么丑陋的代码
-	// I never typed this ugly code...
-
 	forms := []model.NormalForm{}
 	initial.DB.Find(&forms)
 	f := FormsDataTotal{}
