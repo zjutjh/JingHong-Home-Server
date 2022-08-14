@@ -24,12 +24,18 @@ type email struct {
 	SmtpAddr string `mapstructure:"smtp_addr"`
 	SmtpPort int    `mapstructure:"smtp_port"`
 }
+type jwt struct {
+	Issuer  string `mapstructure:"issuer"`
+	Secret  string `mapstructure:"secret"`
+	Expires int    `mapstructure:"expires"`
+}
 type ConfigData struct {
 	Server   server   `mapstructure:"server"`
 	Database database `mapstructure:"database"`
 	Secret   string   `mapstructure:"secret"`
 	Email    email    `mapstructure:"email"`
 	Env      string   `mapstructure:"env"`
+	Jwt      jwt      `mapstructure:"jwt"`
 }
 
 var Config ConfigData

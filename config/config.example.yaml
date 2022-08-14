@@ -22,3 +22,8 @@ email:                                  # 配置邮件发送
     receiver: "another email"           # 接受信息的管理员邮箱
 
 env: "dev"                              # 环境 dev for 开发环境; pro for 生产环境
+
+jwt:                                    # JWT 配置
+  expires : 48                          # 过期时间(单位:小时)
+  issuer  : "issuer"                    # 发行人 
+  secret : "Secret"                     # 密钥

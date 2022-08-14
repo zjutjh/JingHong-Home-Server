@@ -14,4 +14,5 @@ func Init() {
 	corsConfig.AllowAllOrigins = true
 	Router.Use(cors.New(corsConfig))
 	SetRouter()
+
 }
