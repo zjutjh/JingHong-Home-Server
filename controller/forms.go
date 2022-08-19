@@ -3,7 +3,7 @@ package controller
 import (
 	"fmt"
 	"time"
-	"zjutjh/Join-Us/model"
+	"zjutjh/Join-Us/db/model"
 	"zjutjh/Join-Us/utility"
 	"zjutjh/Join-Us/utility/initial"
 
@@ -26,28 +26,28 @@ func NewNormalForm(c *gin.Context) {
 	}
 }
 
-func NewDevelopForm(c *gin.Context) {
-	data := model.DeveloperForm{}
-	err := c.ShouldBindJSON(&data)
-	if err != nil {
-		utility.ResponseError(c, "Json error")
-	}
-	raw_data := model.DeveloperForm{}
-	raw_data.StuID = data.StuID
-	initial.DB.Where("stu_id = ?", data.StuID).First(&raw_data)
-	if (raw_data == model.DeveloperForm{}) {
-		initial.DB.Save(&data)
-	} else {
-		aff := initial.DB.Create(&data)
+// func NewDevelopForm(c *gin.Context) {
+// 	data := model.DeveloperForm{}
+// 	err := c.ShouldBindJSON(&data)
+// 	if err != nil {
+// 		utility.ResponseError(c, "Json error")
+// 	}
+// 	raw_data := model.DeveloperForm{}
+// 	raw_data.StuID = data.StuID
+// 	initial.DB.Where("stu_id = ?", data.StuID).First(&raw_data)
+// 	if (raw_data == model.DeveloperForm{}) {
+// 		initial.DB.Save(&data)
+// 	} else {
+// 		aff := initial.DB.Create(&data)
 
-		if aff.RowsAffected == 0 {
-			utility.ResponseError(c, "Had been Posted")
-		} else {
-			utility.SendEmail(initial.Config.Email.Receiver)
-			utility.ResponseSuccess(c, nil)
-		}
-	}
-}
+// 		if aff.RowsAffected == 0 {
+// 			utility.ResponseError(c, "Had been Posted")
+// 		} else {
+// 			utility.SendEmail(Config.Email.Receiver)
+// 			utility.ResponseSuccess(c, nil)
+// 		}
+// 	}
+// }
 
 func GetAllNormalForms(c *gin.Context) {
 	forms := []model.NormalForm{}

@@ -1,10 +1,11 @@
-package initial
+package db
 
 import (
 	"fmt"
 	"log"
-	. "zjutjh/Join-Us/config"
 	"zjutjh/Join-Us/db/model"
+
+	. "zjutjh/Join-Us/config"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -12,7 +13,7 @@ import (
 
 var DB *gorm.DB
 
-func DatabaseInit() {
+func init() {
 	username := Config.Database.Username
 	password := Config.Database.Password
 	address := Config.Database.Address

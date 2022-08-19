@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"zjutjh/Join-Us/utility/initial"
+	. "zjutjh/Join-Us/config"
 
 	"gopkg.in/gomail.v2"
 )
@@ -36,10 +36,10 @@ func SendEmail(target string) error {
 	//这里支持群发，只需填写多个人的邮箱即可，我这里发送人使用的是QQ邮箱，所以接收人也必须都要是
 	//QQ邮箱
 	mailConf.RecipientList = []string{target}
-	mailConf.Sender = initial.Config.Email.Sender
+	mailConf.Sender = Config.Email.Sender
 
 	//这里QQ邮箱要填写授权码，网易邮箱则直接填写自己的邮箱密码，授权码获得方法在下面
-	mailConf.SPassword = initial.Config.Email.Pwd
+	mailConf.SPassword = Config.Email.Pwd
 
 	//下面是官方邮箱提供的SMTP服务地址和端口
 	// QQ邮箱：SMTP服务器地址：smtp.qq.com（端口：587）
@@ -48,8 +48,8 @@ func SendEmail(target string) error {
 	// 126邮箱: SMTP服务器地址：smtp.126.com（端口：25）
 	// 新浪邮箱: SMTP服务器地址：smtp.sina.com（端口：25）
 
-	mailConf.SMTPAddr = initial.Config.Email.SmtpAddr
-	mailConf.SMTPPort = initial.Config.Email.SmtpPort
+	mailConf.SMTPAddr = Config.Email.SmtpAddr
+	mailConf.SMTPPort = Config.Email.SmtpPort
 
 	//发送的内容
 	html := fmt.Sprintf(`<p>收到一条新的招新表单</p>`)
@@ -62,7 +62,7 @@ func SendEmail(target string) error {
 	m.SetHeader(`Subject`, mailConf.Title)
 	m.SetBody(`text/html`, html)
 	// m.Attach("./Dockerfile") //添加附件
-	if initial.Config.Env == "pro" {
+	if !Config.Dev {
 		err := gomail.NewDialer(mailConf.SMTPAddr, mailConf.SMTPPort, mailConf.Sender, mailConf.SPassword).DialAndSend(m)
 		if err != nil {
 			log.Fatalf("Send Email Fail, %s", err.Error())

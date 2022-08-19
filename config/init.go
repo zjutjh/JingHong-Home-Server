@@ -1,4 +1,4 @@
-package initial
+package config
 
 import (
 	"log"
@@ -34,13 +34,13 @@ type ConfigData struct {
 	Database database `mapstructure:"database"`
 	Secret   string   `mapstructure:"secret"`
 	Email    email    `mapstructure:"email"`
-	Env      string   `mapstructure:"env"`
+	Dev      bool     `mapstructure:"dev"`
 	Jwt      jwt      `mapstructure:"jwt"`
 }
 
 var Config ConfigData
 
-func ConfigInit() {
+func init() {
 	var config = viper.New()
 	// 配置文件初始化函数
 	config.SetConfigName("config")

@@ -1,13 +1,43 @@
 package main
 
 import (
-	"zjutjh/Join-Us/router"
-	"zjutjh/Join-Us/utility/initial"
+	"context"
+	"log"
+	"net/http"
+	"os"
+	"os/signal"
+	"time"
+	. "zjutjh/Join-Us/config"
+	_ "zjutjh/Join-Us/db"
+	. "zjutjh/Join-Us/router"
 )
 
 func main() {
-	initial.ConfigInit()             // 配置文件初始化
-	initial.DatabaseInit()           // 数据库初始化
-	router.Init()                    // 路由初始化
-	initial.RunServer(router.Router) // 运行服务器
+	var server *http.Server
+	var port string = ":" + Config.Server.Port
+	log.Println("Running Server at", port)
+
+	server = &http.Server{
+		Addr:    port,
+		Handler: Router,
+	}
+
+	go func() {
+		if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+			log.Fatalf("Listen: %s\n", err)
+		}
+	}()
+
+	quit := make(chan os.Signal)
+	signal.Notify(quit, os.Interrupt)
+	<-quit
+	log.Println("Shutdown Server ...")
+
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	if err := server.Shutdown(ctx); err != nil {
+		log.Fatal("Server Shutdown:", err)
+	}
+	log.Println("Server Exiting")
 }
