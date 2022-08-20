@@ -1,10 +1,7 @@
 # config.example.yaml 请**不要**上传您的config.yaml文件
 server:
     port: "8888"                        # type: string 服务器监听的端口
-    jwt:                                # 本项目没有用到jwt
-        expires: 48 # hours 
-        issuer: "string"
-        secret: "string"
+
 
 database:                               # 数据库
     username: "username"                # 数据库用户
@@ -13,7 +10,7 @@ database:                               # 数据库
     dbname: "databaseName"              # 数据表名
 
 secret: "something"                     # 用于管理员查看招新信息的密码，确定好后通过其他方式发送给内部人员。
-
+secret2: "secret2"                      # 用于会长团查看详细信息, 应当与secret不同
 email:                                  # 配置邮件发送
     sender: "example@example.com"       # 发信信箱
     pwd: "your email token"             # 发信信箱秘密啊

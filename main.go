@@ -16,7 +16,6 @@ func main() {
 	var server *http.Server
 	var port string = ":" + Config.Server.Port
 	log.Println("Running Server at", port)
-
 	server = &http.Server{
 		Addr:    port,
 		Handler: Router,

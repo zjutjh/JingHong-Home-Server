@@ -7,7 +7,8 @@ import (
 )
 
 type server struct {
-	Port string `mapstructure:"port"`
+	Port         string   `mapstructure:"port"`
+	AllowOrigins []string `mapstructure:"allow_origins"`
 }
 
 type database struct {
@@ -33,6 +34,7 @@ type ConfigData struct {
 	Server   server   `mapstructure:"server"`
 	Database database `mapstructure:"database"`
 	Secret   string   `mapstructure:"secret"`
+	Secret2  string   `mapstructure:"secret2"`
 	Email    email    `mapstructure:"email"`
 	Dev      bool     `mapstructure:"dev"`
 	Jwt      jwt      `mapstructure:"jwt"`
@@ -42,7 +44,6 @@ var Config ConfigData
 
 func init() {
 	var config = viper.New()
-	// 配置文件初始化函数
 	config.SetConfigName("config")
 	config.SetConfigType("yaml")
 	config.AddConfigPath("./config")

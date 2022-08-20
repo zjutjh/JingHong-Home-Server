@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	"strconv"
+	. "zjutjh/Join-Us/config"
 	"zjutjh/Join-Us/utility"
 
 	"github.com/gin-gonic/gin"
@@ -14,16 +14,10 @@ func IsAdmin(c *gin.Context) {
 		c.Abort()
 		return
 	}
-	id, err := utility.ParseToken(secret)
-	if err != nil {
-		utility.ResponseError(c, "Token Error")
+	if secret == Config.Secret {
+		c.Next()
+	} else {
+		utility.ResponseError(c, "No Authorization")
 		c.Abort()
 	}
-	id_int, ok := strconv.Atoi(id)
-	if ok != nil {
-		utility.ResponseError(c, "Token Error")
-		c.Abort()
-	}
-	c.Set("id", uint64(id_int))
-	c.Next()
 }

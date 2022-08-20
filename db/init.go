@@ -3,12 +3,12 @@ package db
 import (
 	"fmt"
 	"log"
-	"zjutjh/Join-Us/db/model"
 
 	. "zjutjh/Join-Us/config"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
 var DB *gorm.DB
@@ -20,16 +20,15 @@ func init() {
 	dbname := Config.Database.DbName
 	dsn := fmt.Sprintf("%v:%v@tcp(%v)/%v?charset=utf8mb4&parseTime=True&loc=Local", username, password, address, dbname)
 	var err error
-	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
-	if err != nil {
-		log.Fatalln("Database Connection Error!")
-		panic(err)
+	if Config.Dev {
+		DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{
+			Logger: logger.Default.LogMode(logger.Info),
+		})
+	} else {
+		DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	}
-	//Auto Mirage
-	// TODO: Insert more list
-	err = DB.AutoMigrate(&model.DeveloperForm{}, &model.Ability{}, &model.NormalForm{})
 	if err != nil {
-		log.Fatalln("Database Create Lists Error!")
-		panic(err)
+		log.Panicln("Database Connection Error!", err)
 	}
+
 }
