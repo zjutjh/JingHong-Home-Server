@@ -14,7 +14,22 @@ func IsAdmin(c *gin.Context) {
 		c.Abort()
 		return
 	}
-	if secret == Config.Secret {
+	if secret == Config.Secret || secret == Config.Secret2 {
+		c.Next()
+	} else {
+		utility.ResponseError(c, "No Authorization")
+		c.Abort()
+	}
+}
+
+func IsAdvanced(c *gin.Context) {
+	secret := c.GetHeader("Authorization")
+	if secret == "" {
+		utility.ResponseError(c, "No Authorization")
+		c.Abort()
+		return
+	}
+	if secret == Config.Secret2 {
 		c.Next()
 	} else {
 		utility.ResponseError(c, "No Authorization")

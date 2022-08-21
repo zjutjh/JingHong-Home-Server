@@ -7,11 +7,12 @@ import (
 	"zjutjh/Join-Us/utility"
 
 	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
 )
 
 func NewNormalForm(c *gin.Context) {
 	postData := model.NormalForm{}
-	err := c.ShouldBindJSON(&postData)
+	err := c.ShouldBindBodyWith(&postData, binding.JSON)
 	if err != nil {
 		log.Println("New Normal:", err)
 		utility.ResponseError(c, "Post Data Error")
