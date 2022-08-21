@@ -1,24 +1,25 @@
 package model
 
 import (
+	"fmt"
 	"time"
 	. "zjutjh/Join-Us/db"
 )
 
 type NormalForm struct {
-	Name      string    `gorm:"not null" json:"name"`
-	UpdatedAt time.Time `gorm:"not null" json:"-"`
-	StuID     string    `gorm:"primaryKey" json:"stu_id"`
-	Gender    string    `gorm:"not null" json:"gender"`
-	College   string    `gorm:"not null" json:"college"`
-	Campus    string    `gorm:"not null" json:"campus"`
-	Phone     string    `gorm:"not null" json:"phone"`
-	QQ        string    `gorm:"not null" json:"qq"`
-	Region    int       `gorm:"not null" json:"region"`
-	Want1     int       `gorm:"not null" json:"want1"`
-	Want2     int       `gorm:"not null" json:"want2"`
-	Profile   string    `gorm:"not null" json:"profile"`
-	Feedback  string    `gorm:"not null" json:"feedback"`
+	Name      string    `gorm:"not null" json:"name" xlsx:"姓名"`
+	UpdatedAt time.Time `gorm:"not null" json:"-" xlsx:"更新时间"`
+	StuID     string    `gorm:"primaryKey" json:"stu_id" xlsx:"学号"`
+	Gender    string    `gorm:"not null" json:"gender" xlsx:"性别"`
+	College   string    `gorm:"not null" json:"college" xlsx:"专业"`
+	Campus    string    `gorm:"not null" json:"campus" xlsx:"学院"`
+	Phone     string    `gorm:"not null" json:"phone" xlsx:"电话号"`
+	QQ        string    `gorm:"not null" json:"qq" xlsx:"QQ"`
+	Region    int       `gorm:"not null" json:"region" xlsx:"校区"`
+	Want1     int       `gorm:"not null" json:"want1" xlsx:"第一志愿"`
+	Want2     int       `gorm:"not null" json:"want2" xlsx:"第二志愿"`
+	Profile   string    `gorm:"not null" json:"profile" xlsx:"简介"`
+	Feedback  string    `gorm:"not null" json:"feedback" xlsx:"反馈"`
 }
 
 func NewNormalForm(form *NormalForm) error {
@@ -30,9 +31,11 @@ func UpdateNormalForm(form *NormalForm) error {
 }
 
 func GetNormalFormByStuID(stuID string) (*NormalForm, error) {
-	var form *NormalForm
-	err := DB.Where("stu_id = ?", stuID).First(form).Error
-	return form, err
+	var form NormalForm
+	form.StuID = stuID
+	err := DB.First(&form).Error
+	fmt.Println(form)
+	return &form, err
 }
 
 func GetAllNormalForms() ([]NormalForm, error) {

@@ -1,5 +1,9 @@
 {
-  "cSpell.words": ["Preload", "zjutjh"],
+  "cSpell.words": [
+    "excelize",
+    "Preload",
+    "zjutjh"
+  ],
   "workbench.colorCustomizations": {
     "activityBar.background": "#53143D",
     "titleBar.activeBackground": "#741C56",

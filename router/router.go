@@ -6,7 +6,6 @@ import (
 )
 
 func SetRouter() {
-	// TODO: routers list here
 	// Router.POST("/api/new_normal", middleware.VerifyCaptcha, controller.NewNormalForm) // 招新季招新表单
 	Router.POST("/api/new_normal", controller.NewNormalForm)
 	// Router.POST("/api/new_develop", middleware.VerifyCaptcha, controller.NewDevelopForm)    // 长期招新：技术部 表单
@@ -16,4 +15,7 @@ func SetRouter() {
 	Router.GET("/api/get_forms/total", controller.GetNormalFormTotal) // 获取表单统计信息
 	Router.GET("/api/get_captcha", controller.NewCaptcha)             // 获取验证码
 	Router.GET("/api/test_admin", middleware.IsAdmin, controller.TestAdmin)
+	Router.GET("/api/all_normal_forms_brief", controller.GetAllNormalFormsBrief)
+	Router.GET("/api/normal_form", controller.GetNormalForm)
+	Router.GET("/api/export_normal_form", controller.ExportAllNormalFormExcel)
 }
