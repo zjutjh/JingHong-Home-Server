@@ -7,5 +7,6 @@ import (
 )
 
 func TestAdmin(c *gin.Context) {
-	utility.ResponseSuccess(c, nil)
+	user := c.GetString("admin")
+	utility.ResponseSuccess(c, gin.H{"data": user})
 }

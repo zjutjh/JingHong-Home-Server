@@ -15,6 +15,11 @@ func IsAdmin(c *gin.Context) {
 		return
 	}
 	if secret == Config.Secret || secret == Config.Secret2 {
+		if secret == Config.Secret {
+			c.Set("admin", "normal")
+		} else {
+			c.Set("admin", "advance")
+		}
 		c.Next()
 	} else {
 		utility.ResponseError(c, "No Authorization")
