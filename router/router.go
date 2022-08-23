@@ -13,4 +13,5 @@ func SetRouter() {
 	Router.GET("/api/all_normal_forms_brief", middleware.IsAdvanced, controller.GetAllNormalFormsBrief)
 	Router.GET("/api/normal_form", middleware.IsAdvanced, controller.GetNormalForm)
 	Router.GET("/api/export_normal_form", middleware.IsAdvanced, controller.ExportAllNormalFormExcel)
+	Router.GET("/api/test", controller.Test)
 }
