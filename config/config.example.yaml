@@ -9,9 +9,9 @@ database:                               # 数据库
     username: "username"                # 数据库用户
     password: "password"                # 密码
     address: "address:port"             # 数据库地址
-    db_name: "databaseName"              # 数据表名
+    db_name: "databaseName"             # 数据库名
 
-secret: "secret"                     # 用于管理员查看招新信息的密码，确定好后通过其他方式发送给内部人员。
+secret: "secret"                        # 用于管理员查看招新信息的密码，确定好后通过其他方式发送给内部人员。
 secret2: "secret2"                      # 用于会长团查看详细信息, 应当与secret不同
 
 dev: true                               # 是否为开发环境
