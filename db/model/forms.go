@@ -72,16 +72,20 @@ func GetNormalFormTotal() FormTotal {
 		if v.UpdatedAt.Unix() >= today.Unix() {
 			res[0][1] += 1
 			res[v.Want1][Today] += 1
-			res[v.Want2][Today] += 1
+			if v.Want2 != 0 {
+				res[v.Want2][Today] += 1
+			}
 		}
 		res[0][v.Region+1] += 1
 		// 分部门统计
 		res[v.Want1][want1] += 1
 		res[v.Want1][v.Region] += 1
-		res[v.Want2][want2] += 1
-		res[v.Want2][v.Region+4] += 1
 		res[v.Want1][Total] += 1
-		res[v.Want2][Total] += 1
+		if v.Want2 != 0 {
+			res[v.Want2][want2] += 1
+			res[v.Want2][v.Region+4] += 1
+			res[v.Want2][Total] += 1
+		}
 	}
 	return res
 }
