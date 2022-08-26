@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"io"
 	"log"
 	"net/http"
 	"os"
@@ -15,6 +16,14 @@ import (
 func main() {
 	var server *http.Server
 	var port string = ":" + Config.Server.Port
+	f, err := os.OpenFile("./log/log.log", os.O_CREATE|os.O_APPEND|os.O_RDWR, os.ModePerm)
+	if err != nil {
+		return
+	}
+	defer f.Close()
+	multiWriter := io.MultiWriter(os.Stdout, f)
+	log.SetOutput(multiWriter)
+
 	log.Println("Running Server at", port)
 	server = &http.Server{
 		Addr:    port,

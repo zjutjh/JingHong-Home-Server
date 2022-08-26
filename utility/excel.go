@@ -69,8 +69,9 @@ func init() {
 		"0": "男",
 		"1": "女",
 	}
-	region = [4]string{"no", "朝晖", "屏峰", "莫干山"}
-	want = [10]string{"no", "办公室",
+	region = [4]string{"未选择", "朝晖", "屏峰", "莫干山"}
+	want = [10]string{"未选择",
+		"办公室",
 		"活动部",
 		"秘书处",
 		"Touch产品部",
@@ -78,7 +79,8 @@ func init() {
 		"编辑工作室",
 		"视觉影像部",
 		"技术部",
-		"易班文化工作站"}
+		"易班文化工作站",
+	}
 }
 
 func GenerateExcel() string {
