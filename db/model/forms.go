@@ -1,7 +1,6 @@
 package model
 
 import (
-	"fmt"
 	"time"
 	. "zjutjh/Join-Us/db"
 )
@@ -34,7 +33,6 @@ func GetNormalFormByStuID(stuID string) (*NormalForm, error) {
 	var form NormalForm
 	form.StuID = stuID
 	err := DB.First(&form).Error
-	fmt.Println(form)
 	return &form, err
 }
 

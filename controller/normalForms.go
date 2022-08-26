@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"fmt"
 	"log"
 	"zjutjh/Join-Us/db/model"
 	"zjutjh/Join-Us/utility"
@@ -57,7 +56,6 @@ func GetNormalForm(c *gin.Context) {
 		utility.ResponseError(c, "Server Error")
 		return
 	}
-	fmt.Println("form:", form)
 	utility.ResponseSuccess(c, gin.H{"data": form})
 }
 

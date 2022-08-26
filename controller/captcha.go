@@ -1,7 +1,7 @@
 package controller
 
 import (
-	"fmt"
+	"log"
 	"zjutjh/Join-Us/utility"
 
 	"github.com/gin-gonic/gin"
@@ -11,7 +11,7 @@ func NewCaptcha(c *gin.Context) {
 	id, b64s, err := utility.GetNewCaptcha()
 	if err != nil {
 		utility.ResponseError(c, err.Error())
-		fmt.Println(err)
+		log.Println(err)
 	}
 	utility.ResponseSuccess(c, gin.H{
 		"id":   id,
