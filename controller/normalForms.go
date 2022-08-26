@@ -23,6 +23,7 @@ func NewNormalForm(c *gin.Context) {
 	if (form == &model.NormalForm{}) {
 		err = model.NewNormalForm(&postData)
 	} else {
+		postData.CreatedAt = form.CreatedAt
 		err = model.UpdateNormalForm(&postData)
 	}
 	if err != nil {

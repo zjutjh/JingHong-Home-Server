@@ -45,19 +45,21 @@ func WriteXlsx(sheet string, records interface{}) *excelize.File {
 }
 
 type Data struct {
-	Name      string    `gorm:"not null" json:"name" xlsx:"姓名"`
-	UpdatedAt time.Time `gorm:"not null" json:"-" xlsx:"更新时间"`
-	StuID     string    `gorm:"primaryKey" json:"stu_id" xlsx:"学号"`
-	Gender    string    `gorm:"not null" json:"gender" xlsx:"性别"`
-	College   string    `gorm:"not null" json:"college" xlsx:"专业"`
-	Campus    string    `gorm:"not null" json:"campus" xlsx:"学院"`
-	Phone     string    `gorm:"not null" json:"phone" xlsx:"电话号"`
-	QQ        string    `gorm:"not null" json:"qq" xlsx:"QQ"`
-	Region    string    `gorm:"not null" json:"region" xlsx:"校区"`
-	Want1     string    `gorm:"not null" json:"want1" xlsx:"第一志愿"`
-	Want2     string    `gorm:"not null" json:"want2" xlsx:"第二志愿"`
-	Profile   string    `gorm:"not null" json:"profile" xlsx:"简介"`
-	Feedback  string    `gorm:"not null" json:"feedback" xlsx:"反馈"`
+	Name       string    `gorm:"not null" json:"name" xlsx:"姓名"`
+	UpdatedAt  time.Time `gorm:"not null" json:"-" xlsx:"更新时间"`
+	CreatedAt  time.Time `gorm:"not null" json:"-" xlsx:"创建时间"`
+	StuID      string    `gorm:"primaryKey" json:"stu_id" xlsx:"学号"`
+	Gender     string    `gorm:"not null" json:"gender" xlsx:"性别"`
+	College    string    `gorm:"not null" json:"college" xlsx:"专业"`
+	Campus     string    `gorm:"not null" json:"campus" xlsx:"学院"`
+	Phone      string    `gorm:"not null" json:"phone" xlsx:"电话号"`
+	QQ         string    `gorm:"not null" json:"qq" xlsx:"QQ"`
+	Region     string    `gorm:"not null" json:"region" xlsx:"校区"`
+	Want1      string    `gorm:"not null" json:"want1" xlsx:"第一志愿"`
+	Want2      string    `gorm:"not null" json:"want2" xlsx:"第二志愿"`
+	Profile    string    `gorm:"not null" json:"profile" xlsx:"简介"`
+	Feedback   string    `gorm:"not null" json:"feedback" xlsx:"反馈"`
+	IsModified bool      `gorm:"not null" json:"is_modified" xlsx:"是否修改"`
 }
 
 var gender map[string]string
@@ -88,19 +90,21 @@ func GenerateExcel() string {
 	var data []Data
 	for _, form := range forms {
 		data = append(data, Data{
-			Name:      form.Name,
-			UpdatedAt: form.UpdatedAt,
-			StuID:     form.StuID,
-			Gender:    gender[form.Gender],
-			Campus:    form.Campus,
-			College:   form.College,
-			Phone:     form.Phone,
-			QQ:        form.QQ,
-			Region:    region[form.Region],
-			Want1:     want[form.Want1],
-			Want2:     want[form.Want2],
-			Profile:   form.Profile,
-			Feedback:  form.Feedback,
+			Name:       form.Name,
+			UpdatedAt:  form.UpdatedAt,
+			CreatedAt:  form.CreatedAt,
+			IsModified: form.UpdatedAt != form.CreatedAt,
+			StuID:      form.StuID,
+			Gender:     gender[form.Gender],
+			Campus:     form.Campus,
+			College:    form.College,
+			Phone:      form.Phone,
+			QQ:         form.QQ,
+			Region:     region[form.Region],
+			Want1:      want[form.Want1],
+			Want2:      want[form.Want2],
+			Profile:    form.Profile,
+			Feedback:   form.Feedback,
 		})
 	}
 	f := WriteXlsx("Sheet1", data)

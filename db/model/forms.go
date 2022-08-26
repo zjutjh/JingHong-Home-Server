@@ -8,6 +8,7 @@ import (
 type NormalForm struct {
 	Name      string    `gorm:"not null" json:"name" xlsx:"姓名"`
 	UpdatedAt time.Time `gorm:"not null" json:"-" xlsx:"更新时间"`
+	CreatedAt time.Time `gorm:"not null" json:"-" xlsx:"创建时间"`
 	StuID     string    `gorm:"primaryKey" json:"stu_id" xlsx:"学号"`
 	Gender    string    `gorm:"not null" json:"gender" xlsx:"性别"`
 	College   string    `gorm:"not null" json:"college" xlsx:"专业"`

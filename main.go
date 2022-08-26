@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"io"
 	"log"
 	"net/http"
 	"os"
@@ -11,18 +10,14 @@ import (
 	. "zjutjh/Join-Us/config"
 	_ "zjutjh/Join-Us/db"
 	. "zjutjh/Join-Us/router"
+	JHLog "zjutjh/Join-Us/utility/log"
 )
 
 func main() {
 	var server *http.Server
 	var port string = ":" + Config.Server.Port
-	f, err := os.OpenFile("./log/log.log", os.O_CREATE|os.O_APPEND|os.O_RDWR, os.ModePerm)
-	if err != nil {
-		return
-	}
-	defer f.Close()
-	multiWriter := io.MultiWriter(os.Stdout, f)
-	log.SetOutput(multiWriter)
+
+	log.SetOutput(JHLog.LogMultiWriter)
 
 	log.Println("Running Server at", port)
 	server = &http.Server{
