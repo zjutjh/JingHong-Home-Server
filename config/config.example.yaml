@@ -15,3 +15,10 @@ secret: "secret"                        # 用于管理员查看招新信息的�
 secret2: "secret2"                      # 用于会长团查看详细信息, 应当与secret不同
 
 dev: true                               # 是否为开发环境
+
+email:
+    sender: "sender@example.com"
+    pwd: "password"
+    smtp_addr: "smtp.qq.com"
+    smtp_port: 25
+    receiver: "receiver@example.com"

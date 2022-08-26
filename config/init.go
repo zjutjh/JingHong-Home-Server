@@ -17,6 +17,13 @@ type database struct {
 	Address  string `mapstructure:"address"`
 	DbName   string `mapstructure:"db_name"`
 }
+type email struct {
+	Sender   string `mapstructure:"sender"`
+	Pwd      string `mapstructure:"pwd"`
+	SmtpAddr string `mapstructure:"smtp_addr"`
+	SmtpPort int    `mapstructure:"smtp_port"`
+	Receiver string `mapstructure:"receiver"`
+}
 
 type ConfigData struct {
 	Server   server   `mapstructure:"server"`
@@ -24,6 +31,7 @@ type ConfigData struct {
 	Secret   string   `mapstructure:"secret"`
 	Secret2  string   `mapstructure:"secret2"`
 	Dev      bool     `mapstructure:"dev"`
+	Email    email    `mapstructure:"email"`
 }
 
 var Config ConfigData

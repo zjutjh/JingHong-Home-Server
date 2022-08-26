@@ -29,6 +29,7 @@ func NewNormalForm(c *gin.Context) {
 		utility.ResponseError(c, "Internal Server Error")
 		return
 	}
+	// utility.SendEmail(*form)
 	utility.ResponseSuccess(c, nil)
 }
 
